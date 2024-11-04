@@ -1,0 +1,15 @@
+spring:
+    application:
+        name: ProjectManagementSoftwareApplication
+    datasource:
+        url: jdbc:postgresql://localhost:5432/project-management-software
+        username: postgres
+        password: root
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: update # Используйте 'create', 'create-drop', 'validate' или 'none' в зависимости от ваших потребностей
+        show-sql: true # Показывать SQL-запросы в консоли
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
