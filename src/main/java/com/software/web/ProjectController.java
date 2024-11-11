@@ -41,6 +41,11 @@ public class ProjectController {
                 .body(projectMapper.toProjectEntry(savedProject));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
+        projectService.deleteProject(id);
 
+        return ResponseEntity.noContent().build();
+    }
 
 }

@@ -21,7 +21,7 @@ public class RoleController {
     private final RoleService roleService;
     private final RoleMapper roleMapper;
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<RoleDto> getRoleById(@PathVariable Integer id) {
         return ResponseEntity.ok(roleMapper.toRoleDto(roleService.getRoleById(id)));
     }

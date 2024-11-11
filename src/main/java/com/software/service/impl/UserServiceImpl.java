@@ -9,11 +9,13 @@ import com.software.service.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @Slf4j
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
@@ -42,6 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User createUser(User user) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new UserCreateException(user.getEmail());
@@ -51,6 +54,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User updateUser(Long userId, User updatedUser) {
         var userToUpdate = getUserById(userId);
         userMapper.updateUser(updatedUser, userToUpdate);
@@ -59,11 +63,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteUser(Long userId) {
         if (userRepository.findById(userId).isPresent()) {
             userRepository.deleteById(userId);
         } else {
             log.warn("Attempt to delete user with id {}", userId);
         }
+    }
+
+    @Override
+    @Transactional
+    public User saveUser(User userToSave) {
+        return userRepository.save(userToSave);
     }
 }

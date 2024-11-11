@@ -23,6 +23,6 @@ create table user_role
     primary key (user_id, role_id)
 );
 
-
+insert into roles (name) values ('OWNER');
 
 
