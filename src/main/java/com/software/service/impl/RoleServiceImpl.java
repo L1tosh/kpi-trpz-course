@@ -1,6 +1,6 @@
 package com.software.service.impl;
 
-import com.software.data.user.RoleRepository;
+import com.software.data.RoleRepository;
 import com.software.domain.user.Role;
 import com.software.service.RoleService;
 import com.software.service.exception.role.RoleCreateException;

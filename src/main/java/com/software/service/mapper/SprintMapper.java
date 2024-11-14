@@ -9,18 +9,18 @@ import org.mapstruct.Named;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {UserMapper.class, ItemMapper.class})
+@Mapper(componentModel = "spring", uses = {ItemMapper.class})
 public interface SprintMapper {
 
     @Mapping(source = "startTime", target = "startTime")
     @Mapping(source = "endTime", target = "endTime")
-    @Mapping(source = "command", target = "command", qualifiedByName = "toUserList")
+    @Mapping(source = "command", target = "command")
     @Mapping(source = "items", target = "items", qualifiedByName = "toItemList")
     Sprint toSprint(SprintDto sprintDto);
 
     @Mapping(source = "startTime", target = "startTime")
     @Mapping(source = "endTime", target = "endTime")
-    @Mapping(source = "command", target = "command", qualifiedByName = "toUserListDto")
+    @Mapping(source = "command", target = "command")
     @Mapping(source = "items", target = "items", qualifiedByName = "toItemListDto")
     SprintDto toSprintDto(Sprint sprint);
 

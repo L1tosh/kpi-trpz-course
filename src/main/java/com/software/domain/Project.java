@@ -1,7 +1,6 @@
 package com.software.domain;
 
 import com.software.domain.item.Item;
-import com.software.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,12 +23,16 @@ public class Project {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private User owner;
+    @Column(name = "owner_id")
+    private Long owner;
 
-    @OneToMany(mappedBy = "project")
-    private List<User> workers;
+    @ElementCollection
+    @CollectionTable(
+            name = "user_project_role",
+            joinColumns = @JoinColumn(name = "project_id")
+    )
+    @Column(name = "user_id")
+    private List<Long> workers;
 
     @OneToMany(mappedBy = "project")
     private List<Event> events;

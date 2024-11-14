@@ -2,7 +2,6 @@ package com.software.dto.item;
 
 import com.software.dto.item.status.StatusDto;
 import com.software.dto.item.type.ItemTypeDto;
-import com.software.dto.user.UserDto;
 import lombok.Builder;
 import lombok.Value;
 
@@ -22,6 +21,6 @@ public class ItemDto {
     StatusDto status;
     ItemTypeDto itemType;
 
-    UserDto author;
-    UserDto executor;
+    Long author;
+    Long executor;
 }

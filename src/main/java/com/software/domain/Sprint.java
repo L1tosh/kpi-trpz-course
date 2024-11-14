@@ -1,7 +1,6 @@
 package com.software.domain;
 
 import com.software.domain.item.Item;
-import com.software.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,8 +25,13 @@ public class Sprint {
     @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
 
-    @OneToMany(mappedBy = "sprint")
-    private List<User> command;
+    @ElementCollection
+    @CollectionTable(
+            name = "user_sprint",
+            joinColumns = @JoinColumn(name = "sprint_id")
+    )
+    @Column(name = "user_id")
+    private List<Long> command;
 
     @OneToMany(mappedBy = "sprint")
     private List<Item> items;

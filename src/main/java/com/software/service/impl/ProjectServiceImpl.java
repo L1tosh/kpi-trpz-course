@@ -3,7 +3,6 @@ package com.software.service.impl;
 import com.software.data.ProjectRepository;
 import com.software.domain.Project;
 import com.software.service.ProjectService;
-import com.software.service.UserService;
 import com.software.service.exception.project.ProjectCreateException;
 import com.software.service.exception.project.ProjectNotFoundException;
 import com.software.service.mapper.ProjectMapper;
@@ -22,8 +21,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
     private final ProjectMapper projectMapper;
-
-    private final UserService userService;
 
     @Override
     public List<Project> getAllProjects() {
@@ -45,11 +42,6 @@ public class ProjectServiceImpl implements ProjectService {
             log.info("Project with name {} already exist", project.getName());
             throw new ProjectCreateException(project.getName());
         }
-
-        var owner = userService.getUserById(project.getOwner().getId());
-
-        project.setOwner(owner);
-        project.setWorkers(List.of(owner));
 
         return projectRepository.save(project);
     }

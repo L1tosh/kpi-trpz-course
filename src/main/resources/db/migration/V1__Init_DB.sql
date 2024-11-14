@@ -1,8 +1,7 @@
-create table sprints
+create table roles
 (
-    id         bigserial primary key,
-    start_time timestamp not null,
-    end_time   timestamp not null
+    id   serial primary key,
+    name varchar(64) not null unique
 );
 
 create table projects
@@ -11,6 +10,14 @@ create table projects
     name        varchar(255) not null,
     description text,
     owner_id    bigint       not null
+);
+
+create table sprints
+(
+    id         bigserial primary key,
+    start_time timestamp not null,
+    end_time   timestamp not null,
+    project_id bigint    not null references projects (id)
 );
 
 create table item_types
@@ -50,8 +57,8 @@ create table items
     end_time    timestamp,
     create_time timestamp    not null default now(),
 
-    author_id   bigint references users (id),
-    executor_id bigint references users (id),
+    author_id   bigint       not null,
+    executor_id bigint,
 
     sprint_id   int references sprints (id),
     project_id  int references projects (id),
@@ -64,7 +71,7 @@ create table items
 create table comments
 (
     id        bigserial primary key,
-    author_id int       not null references users (id),
+    author_id bigint    not null,
     text      text      not null,
     time      timestamp not null default now()
 );
@@ -93,14 +100,11 @@ create table item_files
     primary key (item_id, file_id)
 );
 
+create table user_project_role
+(
+    user_id    bigint not null,
+    project_id bigint not null references projects (id),
+    role_id    int    not null references roles (id),
 
-
-alter table users
-    add constraint fk_user_project foreign key (project_id) references projects (id);
-
-alter table projects
-    add constraint fk_project_owner foreign key (owner_id) references users(id);
-
-alter table sprints
-    add column project_id int not null references projects(id);
-
+    primary key (user_id, role_id, project_id)
+);

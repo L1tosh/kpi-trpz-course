@@ -1,6 +1,5 @@
 package com.software.dto.project;
 
-import com.software.dto.user.UserDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,5 +18,5 @@ public class ProjectDto {
     String description;
 
     @NotNull(message = "owner is mandatory")
-    UserDto owner;
+    Long owner;
 }

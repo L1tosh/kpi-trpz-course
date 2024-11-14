@@ -4,7 +4,6 @@ import com.software.domain.Comment;
 import com.software.domain.FileStorage;
 import com.software.domain.Project;
 import com.software.domain.Sprint;
-import com.software.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -50,13 +49,11 @@ public class Item {
     @JoinColumn(name = "item_type")
     private ItemType itemType;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private User author;
+    @Column(name = "author_id", nullable = false)
+    private Long author;
 
-    @ManyToOne
-    @JoinColumn(name = "executor_id")
-    private User executor;
+    @Column(name = "executor_id")
+    private Long executor;
 
     @ManyToMany
     @JoinTable(name = "item_comments",

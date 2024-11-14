@@ -10,24 +10,24 @@ import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {UserMapper.class, EventMapper.class, ItemMapper.class, SprintMapper.class})
+@Mapper(componentModel = "spring", uses = {EventMapper.class, ItemMapper.class, SprintMapper.class})
 public interface ProjectMapper {
 
     @Mapping(source = "name", target = "name")
     @Mapping(source = "description", target = "description")
-    @Mapping(source = "owner", target = "owner", qualifiedByName = "toUser")
+    @Mapping(source = "owner", target = "owner")
     Project toProject(ProjectDto projectDto);
 
     @Mapping(source = "name", target = "name")
     @Mapping(source = "description", target = "description")
-    @Mapping(source = "owner", target = "owner", qualifiedByName = "toUserDto")
+    @Mapping(source = "owner", target = "owner")
     ProjectDto toProjectDto(Project project);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "description", target = "description")
-    @Mapping(source = "owner", target = "owner", qualifiedByName = "toUserDto")
-    @Mapping(source = "workers", target = "workers", qualifiedByName = "toUserListDto")
+    @Mapping(source = "owner", target = "owner")
+    @Mapping(source = "workers", target = "workers")
     @Mapping(source = "events", target = "events", qualifiedByName = "toEventListDto")
     @Mapping(source = "items", target = "items", qualifiedByName = "toItemListDto")
     @Mapping(source = "sprints", target = "sprints", qualifiedByName = "toSprintListDto")
@@ -36,8 +36,8 @@ public interface ProjectMapper {
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "description", target = "description")
-    @Mapping(source = "owner", target = "owner", qualifiedByName = "toUser")
-    @Mapping(source = "workers", target = "workers", qualifiedByName = "toUserList")
+    @Mapping(source = "owner", target = "owner")
+    @Mapping(source = "workers", target = "workers")
     @Mapping(source = "events", target = "events", qualifiedByName = "toEventList")
     @Mapping(source = "items", target = "items", qualifiedByName = "toItemList")
     @Mapping(source = "sprints", target = "sprints", qualifiedByName = "toSprintList")

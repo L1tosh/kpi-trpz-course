@@ -8,5 +8,5 @@ import java.util.List;
 @Value
 @Builder
 public class UserListDto {
-    List<UserDto> userDtos;
+    List<Long> staff;
 }

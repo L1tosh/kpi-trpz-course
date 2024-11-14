@@ -9,7 +9,7 @@ import org.mapstruct.Named;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {UserMapper.class, StatusMapper.class,})
+@Mapper(componentModel = "spring", uses = {StatusMapper.class,})
 public interface EventMapper {
 
     @Mapping(source = "title", target = "title")

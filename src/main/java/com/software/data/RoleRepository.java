@@ -1,4 +1,4 @@
-package com.software.data.user;
+package com.software.data;
 
 import com.software.domain.user.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
