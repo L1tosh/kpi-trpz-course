@@ -13,3 +13,8 @@ spring:
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
+
+security:
+    jwt:
+        secret: verysecretkeyomgdonttellanybody
+        lifetime: 10d
