@@ -1,10 +1,11 @@
 package com.software.service.impl;
 
+import com.software.data.ProjectRepository;
 import com.software.data.item.ItemRepository;
 import com.software.domain.item.Item;
 import com.software.service.ItemService;
-import com.software.service.ProjectService;
 import com.software.service.exception.item.ItemNotFoundException;
+import com.software.service.exception.project.ProjectNotFoundException;
 import com.software.service.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +21,8 @@ import java.util.List;
 public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
+    private final ProjectRepository projectRepository;
     private final ItemMapper itemMapper;
-    private final ProjectService projectService;
 
     @Override
     public List<Item> getAllItems() {
@@ -30,7 +31,11 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> getAllItems(Long projectId) {
-        var project = projectService.getProjectById(projectId);
+        var project = projectRepository.findById(projectId).orElseThrow(() -> {
+                    log.info("Project with if {} not found", projectId);
+                    return new ProjectNotFoundException(projectId);
+                }
+        );
         return itemRepository.findByProject(project);
     }
 

@@ -1,5 +1,6 @@
 package com.software.web;
 
+import com.software.annotation.CheckUserInProject;
 import com.software.dto.item.ItemEntry;
 import com.software.dto.item.ItemListDto;
 import com.software.service.ItemService;
@@ -20,11 +21,13 @@ public class ItemController {
     private final ItemService itemService;
     private final ItemMapper itemMapper;
 
+    @CheckUserInProject
     @GetMapping("/{id}")
     public ResponseEntity<ItemEntry> getItemById(@PathVariable Long id) {
         return ResponseEntity.ok(itemMapper.toItemEntry(itemService.getItemById(id)));
     }
 
+    @CheckUserInProject
     @GetMapping
     public ResponseEntity<ItemListDto> getAllItems(@RequestParam Long projectId) {
         return ResponseEntity.ok(itemMapper.toItemListDto(itemService.getAllItems(projectId)));

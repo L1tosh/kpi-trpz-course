@@ -1,6 +1,7 @@
 package com.software.service.impl;
 
 import com.software.data.ProjectRepository;
+import com.software.data.UserProjectRoleRepository;
 import com.software.domain.Project;
 import com.software.service.ProjectService;
 import com.software.service.exception.project.ProjectCreateException;
@@ -20,6 +21,7 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final UserProjectRoleRepository userProjectRoleRepository;
     private final ProjectMapper projectMapper;
 
     @Override
@@ -66,4 +68,14 @@ public class ProjectServiceImpl implements ProjectService {
             log.warn("Attempt to delete project with id {}", projectId);
         }
     }
+
+    @Override
+    public boolean isUserInProject(Long projectId, Long userId) {
+        var project = getProjectById(projectId);
+
+        return project.getWorkers().stream()
+                .anyMatch(worker -> worker.equals(userId));
+    }
+
+
 }

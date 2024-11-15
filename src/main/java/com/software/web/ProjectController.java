@@ -1,5 +1,6 @@
 package com.software.web;
 
+import com.software.annotation.CheckUserInProject;
 import com.software.dto.project.ProjectDto;
 import com.software.dto.project.ProjectEntry;
 import com.software.dto.project.ProjectListDto;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
+
 @RestController
 @Validated
 @RequiredArgsConstructor
@@ -23,8 +25,8 @@ public class ProjectController {
     private final ProjectMapper projectMapper;
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProjectDto> getProjectById(@PathVariable Long id) {
-        return ResponseEntity.ok(projectMapper.toProjectDto(projectService.getProjectById(id)));
+    public ResponseEntity<ProjectDto> getProjectById(@PathVariable("id") Long projectId) {
+        return ResponseEntity.ok(projectMapper.toProjectDto(projectService.getProjectById(projectId)));
     }
 
     @GetMapping
@@ -41,12 +43,22 @@ public class ProjectController {
                 .body(projectMapper.toProjectEntry(savedProject));
     }
 
+    @CheckUserInProject
+    @PutMapping("/{id}")
+    public ResponseEntity<ProjectDto> updateProject(
+            @PathVariable Long id,
+            @RequestBody @Valid ProjectDto updatedProjectDto) {
+        var updatedProject =
+                projectService.updateProject(id, projectMapper.toProject(updatedProjectDto));
+        return ResponseEntity.ok(projectMapper.toProjectDto(updatedProject));
+    }
+
+    @CheckUserInProject
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
-        projectService.deleteProject(id);
+    public ResponseEntity<Void> deleteProject(@PathVariable("id") Long projectId) {
+        projectService.deleteProject(projectId);
 
         return ResponseEntity.noContent().build();
     }
-
 
 }
