@@ -19,7 +19,7 @@ public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
 
     @Override
-    public Role getRoleById(Integer roleId) {
+    public Role getRoleById(Long roleId) {
         return roleRepository.findById(roleId)
                 .orElseThrow(() -> {
                     log.info("Role with id {} not found", roleId);
@@ -51,7 +51,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void deleteRole(Integer roleId) {
+    public void deleteRole(Long roleId) {
         if (roleRepository.findById(roleId).isPresent()) {
             roleRepository.deleteById(roleId);
         } else {

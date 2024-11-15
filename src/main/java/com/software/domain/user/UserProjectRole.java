@@ -1,5 +1,6 @@
 package com.software.domain.user;
 
+import com.software.domain.Project;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,10 +20,12 @@ public class UserProjectRole {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Column(name = "project_id", nullable = false)
-    private Long projectId;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 
-    @Column(name = "role_id", nullable = false)
-    private Integer roleId;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
 }
