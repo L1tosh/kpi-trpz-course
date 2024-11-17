@@ -1,6 +1,7 @@
-package com.software.domain;
+package com.software.domain.methodology.scrum;
 
-import com.software.domain.item.Item;
+import com.software.domain.Project;
+import com.software.domain.Task;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,7 +35,7 @@ public class Sprint {
     private List<Long> command;
 
     @OneToMany(mappedBy = "sprint")
-    private List<Item> items;
+    private List<Task> tasks;
 
     @ManyToOne
     @JoinColumn(name = "project_id")
