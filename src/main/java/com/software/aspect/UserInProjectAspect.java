@@ -1,9 +1,7 @@
 package com.software.aspect;
 
-import com.software.auth.jwt.JwtDecoder;
-import com.software.auth.jwt.JwtToPrincipalConverter;
 import com.software.auth.jwt.JwtTokenUtil;
-import com.software.service.ProjectService;
+import com.software.service.impl.ProjectServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -17,18 +15,13 @@ import org.springframework.stereotype.Component;
 public class UserInProjectAspect {
 
     private final JwtTokenUtil jwtTokenUtil;
-    private final JwtDecoder jwtDecoder;
-    private final JwtToPrincipalConverter jwtToPrincipalConverter;
-    private final ProjectService projectService;
+    private final ProjectServiceImpl projectService;
 
     @Before("@annotation(com.software.annotation.CheckUserInProject) && args(projectId,..)")
     public void checkUserInProject(JoinPoint joinPoint, Long projectId) {
-        String token = jwtTokenUtil.extractTokenFromContext();
+        var userPrincipal = jwtTokenUtil.extractUserPrincipalFromContext();
 
-        var convertJwt = jwtToPrincipalConverter.convert(jwtDecoder.decode(token));
-        var userId = convertJwt.getUserId();
-
-        boolean isUserInProject = projectService.isUserInProject(projectId, userId);
+        boolean isUserInProject = projectService.isUserInProject(projectId, userPrincipal.getUserId());
 
         if (!isUserInProject) {
             throw new AccessDeniedException("User is not part of the project");
