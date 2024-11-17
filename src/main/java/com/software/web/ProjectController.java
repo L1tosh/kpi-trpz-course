@@ -4,8 +4,8 @@ import com.software.annotation.CheckUserInProject;
 import com.software.dto.project.ProjectDto;
 import com.software.dto.project.ProjectEntry;
 import com.software.dto.project.ProjectListDto;
-import com.software.service.ProjectService;
 import com.software.service.mapper.ProjectMapper;
+import com.software.service.proxy.ProjectServiceProxy;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ import java.net.URI;
 @RequestMapping("/api/v1/projects")
 public class ProjectController {
 
-    private final ProjectService projectService;
+    private final ProjectServiceProxy projectService;
     private final ProjectMapper projectMapper;
 
     @GetMapping("/{id}")
