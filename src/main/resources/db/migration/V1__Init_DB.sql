@@ -20,19 +20,6 @@ create table sprints
     project_id bigint    not null references projects (id)
 );
 
-create table item_types
-(
-    id   serial primary key,
-    name varchar(255) not null unique
-);
-
-create table statuses
-(
-    id           serial primary key,
-    name         varchar(255) not null unique,
-    item_type_id int references item_types (id)
-);
-
 create table events
 (
     id          bigserial primary key,
@@ -46,7 +33,7 @@ create table events
     project_id  int references projects (id)
 );
 
-create table items
+create table tasks
 (
     id          bigserial primary key,
     title       varchar(100) not null,
@@ -63,8 +50,8 @@ create table items
     sprint_id   int references sprints (id),
     project_id  int references projects (id),
 
-    status_id   int references statuses (id),
-    item_type   int references item_types (id)
+    task_status   varchar(64) not null ,
+    task_type   varchar(64) not null
 
 );
 
@@ -88,14 +75,14 @@ create table files_storage
 
 create table item_comments
 (
-    item_id    bigint references items (id),
+    item_id    bigint references tasks (id),
     comment_id bigint references comments (id),
     primary key (item_id, comment_id)
 );
 
 create table item_files
 (
-    item_id bigint references items (id),
+    item_id bigint references tasks (id),
     file_id bigint references files_storage (id),
     primary key (item_id, file_id)
 );
@@ -107,4 +94,13 @@ create table user_project_role
     role_id    int    not null references roles (id),
 
     primary key (user_id, role_id, project_id)
+);
+
+
+create table user_sprint
+(
+    sprint_id bigint not null references sprints (id),
+    user_id   bigint not null,
+
+    primary key (user_id, sprint_id)
 );

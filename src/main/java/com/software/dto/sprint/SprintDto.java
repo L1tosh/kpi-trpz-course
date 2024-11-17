@@ -1,6 +1,6 @@
 package com.software.dto.sprint;
 
-import com.software.dto.item.ItemListDto;
+import com.software.dto.task.TaskListDto;
 import lombok.Builder;
 import lombok.Value;
 
@@ -13,5 +13,5 @@ public class SprintDto {
     LocalDateTime startTime;
     LocalDateTime endTime;
     List<Long> command;
-    ItemListDto items;
+    TaskListDto tasks;
 }

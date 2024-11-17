@@ -1,9 +1,8 @@
-package com.software.domain.item;
+package com.software.domain;
 
-import com.software.domain.Comment;
-import com.software.domain.FileStorage;
-import com.software.domain.Project;
-import com.software.domain.Sprint;
+import com.software.common.TaskStatus;
+import com.software.common.TaskType;
+import com.software.domain.methodology.scrum.Sprint;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,8 +15,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "items")
-public class Item {
+@Entity(name = "tasks")
+public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,13 +40,13 @@ public class Item {
     @Column(name = "create_time", nullable = false)
     private LocalDateTime createTime;
 
-    @ManyToOne
-    @JoinColumn(name = "status_id")
-    private Status status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "task_status", nullable = false)
+    private TaskStatus taskStatus;
 
-    @ManyToOne
-    @JoinColumn(name = "item_type")
-    private ItemType itemType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "task_type", nullable = false)
+    private TaskType taskType;
 
     @Column(name = "author_id", nullable = false)
     private Long author;

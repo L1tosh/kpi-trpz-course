@@ -1,7 +1,5 @@
-package com.software.dto.item;
+package com.software.dto.task;
 
-import com.software.dto.item.status.StatusDto;
-import com.software.dto.item.type.ItemTypeDto;
 import lombok.Builder;
 import lombok.Value;
 
@@ -9,8 +7,7 @@ import java.time.LocalDateTime;
 
 @Value
 @Builder
-public class ItemEntry {
-    Long id;
+public class TaskDto {
     String title;
     String description;
     Integer complexity;
@@ -19,8 +16,8 @@ public class ItemEntry {
     LocalDateTime endTime;
     LocalDateTime createTime;
 
-    StatusDto status;
-    ItemTypeDto itemType;
+    String taskStatus;
+    String taskType;
 
     Long author;
     Long executor;

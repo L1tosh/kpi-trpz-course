@@ -1,13 +1,13 @@
-package com.software.data.item;
+package com.software.data;
 
 import com.software.domain.Project;
-import com.software.domain.item.Item;
+import com.software.domain.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, Long> {
-    List<Item> findByProject(Project project);
+public interface TaskRepository extends JpaRepository<Task, Long> {
+    List<Task> findByProject(Project project);
 }

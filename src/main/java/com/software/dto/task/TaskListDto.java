@@ -1,4 +1,4 @@
-package com.software.dto.item;
+package com.software.dto.task;
 
 import lombok.Builder;
 import lombok.Value;
@@ -7,6 +7,6 @@ import java.util.List;
 
 @Value
 @Builder
-public class ItemListDto {
-    List<ItemDto> itemDtos;
+public class TaskListDto {
+    List<TaskDto> taskDtos;
 }

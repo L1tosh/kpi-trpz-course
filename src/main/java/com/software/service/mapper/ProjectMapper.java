@@ -10,7 +10,7 @@ import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {EventMapper.class, ItemMapper.class, SprintMapper.class})
+@Mapper(componentModel = "spring", uses = {EventMapper.class, TaskMapper.class, SprintMapper.class})
 public interface ProjectMapper {
 
     @Mapping(source = "name", target = "name")
@@ -29,7 +29,7 @@ public interface ProjectMapper {
     @Mapping(source = "owner", target = "owner")
     @Mapping(source = "workers", target = "workers")
     @Mapping(source = "events", target = "events", qualifiedByName = "toEventListDto")
-    @Mapping(source = "items", target = "items", qualifiedByName = "toItemListDto")
+    @Mapping(source = "tasks", target = "tasks", qualifiedByName = "toTaskListDto")
     @Mapping(source = "sprints", target = "sprints", qualifiedByName = "toSprintListDto")
     ProjectEntry toProjectEntry(Project project);
 
@@ -39,7 +39,7 @@ public interface ProjectMapper {
     @Mapping(source = "owner", target = "owner")
     @Mapping(source = "workers", target = "workers")
     @Mapping(source = "events", target = "events", qualifiedByName = "toEventList")
-    @Mapping(source = "items", target = "items", qualifiedByName = "toItemList")
+    @Mapping(source = "tasks", target = "tasks", qualifiedByName = "toTaskList")
     @Mapping(source = "sprints", target = "sprints", qualifiedByName = "toSprintList")
     Project toProject(ProjectEntry projectEntry);
 

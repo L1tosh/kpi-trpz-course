@@ -1,6 +1,6 @@
 package com.software.domain;
 
-import com.software.domain.item.Item;
+import com.software.domain.methodology.scrum.Sprint;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,7 +38,7 @@ public class Project {
     private List<Event> events;
 
     @OneToMany(mappedBy = "project")
-    private List<Item> items;
+    private List<Task> tasks;
 
     @OneToMany(mappedBy = "project")
     private List<Sprint> sprints;
