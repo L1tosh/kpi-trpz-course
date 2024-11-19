@@ -12,7 +12,10 @@ import com.software.util.accesscontrol.RolePermissionService;
 import com.software.util.accesscontrol.model.ActionEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,6 +53,8 @@ public class TaskServiceProxy implements TaskService {
 
     @Override
     @Transactional
+    @CachePut(value = "task", key = "#result.id")
+    @CacheEvict(value = "tasks", key = "#projectId")
     public Task createTask(Task task, Long projectId) {
         log.info("Attempting to create task for project with ID: {}", projectId);
         if (hasPermissionForAnyRole(projectId, ActionEnum.CREATE)) {
@@ -64,6 +69,8 @@ public class TaskServiceProxy implements TaskService {
 
     @Override
     @Transactional
+    @CachePut(value = "task", key = "#taskId")
+    @CacheEvict(value = "tasks", key = "#updatedTask.project.id")
     public Task updateTask(Long taskId, Task updatedTask) {
         Long projectId = updatedTask.getProject().getId();
         log.info("Attempting to update task with ID: {}", taskId);
@@ -79,9 +86,14 @@ public class TaskServiceProxy implements TaskService {
 
     @Override
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "task", key = "#taskId"),
+            @CacheEvict(value = "tasks", allEntries = true)
+    })
     public void deleteTaskById(Long taskId) {
         Task taskToDelete = taskService.getTaskById(taskId);
         Long projectId = taskToDelete.getProject().getId();
+
         log.info("Attempting to delete task with ID: {}", taskId);
         if (hasPermissionForAnyRole(projectId, ActionEnum.DELETE)) {
             taskService.deleteTaskById(taskId);

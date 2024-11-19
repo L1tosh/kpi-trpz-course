@@ -7,6 +7,8 @@ import com.software.service.exception.project.ProjectCreateException;
 import com.software.service.impl.ProjectServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -23,8 +25,8 @@ public class ProjectServiceProxy implements ProjectService {
     private final ProjectServiceImpl projectServiceImpl;
     private final JwtTokenUtil jwtTokenUtil;
 
-    @Cacheable("allProjects")
     @Override
+    @Cacheable("allProjects")
     public List<Project> getAllProjects() {
         log.info("Fetching all projects");
         List<Project> projects = projectServiceImpl.getAllProjects();
@@ -32,8 +34,8 @@ public class ProjectServiceProxy implements ProjectService {
         return projects;
     }
 
-    @Cacheable(value = "projects", key = "#projectId")
     @Override
+    @Cacheable(value = "projects", key = "#projectId")
     public Project getProjectById(Long projectId) {
         log.info("Fetching project with id {}", projectId);
         Project project = projectServiceImpl.getProjectById(projectId);
@@ -43,6 +45,8 @@ public class ProjectServiceProxy implements ProjectService {
 
     @Override
     @Transactional
+    @CachePut(value = "projects", key = "#result.id")
+    @CacheEvict(value = "allProjects", allEntries = true)
     public Project createProject(Project project) {
         try {
             log.info("Creating a new project with name {}", project.getName());
@@ -57,6 +61,8 @@ public class ProjectServiceProxy implements ProjectService {
 
     @Override
     @Transactional
+    @CachePut(value = "projects", key = "#projectId")
+    @CacheEvict(value = "allProjects", allEntries = true)
     public Project updateProject(Long projectId, Project updatedProject) {
         log.info("Updating project with id {}", projectId);
         validateUserIsOwner(projectId);
@@ -67,6 +73,7 @@ public class ProjectServiceProxy implements ProjectService {
 
     @Override
     @Transactional
+    @CacheEvict(value = {"allProjects", "projects"}, key = "#projectId", allEntries = true)
     public void deleteProject(Long projectId) {
         validateUserIsOwner(projectId);
         projectServiceImpl.deleteProject(projectId);

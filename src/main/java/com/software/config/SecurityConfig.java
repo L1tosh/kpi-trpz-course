@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .authenticationEntryPoint(unauthorizedHandler))
 
                 .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/projects").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/projects/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/roles").permitAll()
