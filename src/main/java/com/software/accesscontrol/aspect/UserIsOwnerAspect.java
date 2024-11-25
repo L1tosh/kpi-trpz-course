@@ -1,4 +1,4 @@
-package com.software.aspect;
+package com.software.accesscontrol.aspect;
 
 import com.software.auth.jwt.JwtTokenUtil;
 import com.software.service.ProjectService;
@@ -23,7 +23,7 @@ public class UserIsOwnerAspect {
         this.projectService = projectService;
     }
 
-    @Before("@annotation(com.software.annotation.CheckUserIsOwner) && args(projectId,..)")
+    @Before("@annotation(com.software.accesscontrol.annotation.CheckUserIsOwner) && args(projectId,..)")
     public void checkUserInProject(JoinPoint joinPoint, Long projectId) {
         var userPrincipal = jwtTokenUtil.extractUserPrincipalFromContext();
 

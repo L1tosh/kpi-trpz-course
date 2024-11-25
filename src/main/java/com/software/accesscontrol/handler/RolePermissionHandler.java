@@ -1,7 +1,7 @@
-package com.software.util.accesscontrol.handler;
+package com.software.accesscontrol.handler;
 
+import com.software.accesscontrol.model.ActionEnum;
 import com.software.domain.user.Role;
-import com.software.util.accesscontrol.model.ActionEnum;
 import lombok.Setter;
 
 @Setter

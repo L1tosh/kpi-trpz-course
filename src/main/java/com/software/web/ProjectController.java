@@ -1,12 +1,12 @@
 package com.software.web;
 
-import com.software.annotation.CheckUserInProject;
-import com.software.annotation.CheckUserIsOwner;
+import com.software.accesscontrol.annotation.CheckUserInProject;
+import com.software.accesscontrol.annotation.CheckUserIsOwner;
+import com.software.service.ProjectService;
+import com.software.service.mapper.ProjectMapper;
 import com.software.web.dto.project.ProjectDto;
 import com.software.web.dto.project.ProjectEntry;
 import com.software.web.dto.project.ProjectListDto;
-import com.software.service.ProjectService;
-import com.software.service.mapper.ProjectMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

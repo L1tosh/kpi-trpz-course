@@ -1,4 +1,4 @@
-package com.software.annotation;
+package com.software.accesscontrol.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

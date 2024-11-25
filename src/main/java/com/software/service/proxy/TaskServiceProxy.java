@@ -1,5 +1,8 @@
 package com.software.service.proxy;
 
+import com.software.accesscontrol.RolePermissionService;
+import com.software.accesscontrol.factory.PermissionHandlerFactory;
+import com.software.accesscontrol.model.ActionEnum;
 import com.software.auth.jwt.JwtTokenUtil;
 import com.software.domain.Task;
 import com.software.domain.user.Role;
@@ -7,9 +10,6 @@ import com.software.service.TaskService;
 import com.software.service.UserService;
 import com.software.service.exception.access.AccessDeniedException;
 import com.software.service.exception.role.RoleNotFoundException;
-import com.software.util.accesscontrol.RolePermissionService;
-import com.software.util.accesscontrol.factory.PermissionHandlerFactory;
-import com.software.util.accesscontrol.model.ActionEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

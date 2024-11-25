@@ -1,6 +1,6 @@
-package com.software.util.accesscontrol.factory;
+package com.software.accesscontrol.factory;
 
-import com.software.util.accesscontrol.handler.*;
+import com.software.accesscontrol.handler.*;
 import org.springframework.stereotype.Component;
 
 @Component

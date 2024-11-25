@@ -1,11 +1,11 @@
 package com.software.web;
 
-import com.software.annotation.CheckUserInProject;
+import com.software.accesscontrol.annotation.CheckUserInProject;
+import com.software.service.TaskService;
+import com.software.service.mapper.TaskMapper;
 import com.software.web.dto.task.TaskDto;
 import com.software.web.dto.task.TaskEntry;
 import com.software.web.dto.task.TaskListDto;
-import com.software.service.TaskService;
-import com.software.service.mapper.TaskMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

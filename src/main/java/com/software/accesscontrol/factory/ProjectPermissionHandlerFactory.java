@@ -1,8 +1,8 @@
-package com.software.util.accesscontrol.factory;
+package com.software.accesscontrol.factory;
 
-import com.software.util.accesscontrol.handler.AdministratorPermissionHandler;
-import com.software.util.accesscontrol.handler.OwnerPermissionHandler;
-import com.software.util.accesscontrol.handler.RolePermissionHandler;
+import com.software.accesscontrol.handler.AdministratorPermissionHandler;
+import com.software.accesscontrol.handler.OwnerPermissionHandler;
+import com.software.accesscontrol.handler.RolePermissionHandler;
 import org.springframework.stereotype.Component;
 
 @Component
