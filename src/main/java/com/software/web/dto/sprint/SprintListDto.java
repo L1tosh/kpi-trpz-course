@@ -1,4 +1,4 @@
-package com.software.dto.sprint;
+package com.software.web.dto.sprint;
 
 import lombok.Builder;
 import lombok.Value;

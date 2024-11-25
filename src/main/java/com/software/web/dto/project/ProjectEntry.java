@@ -1,8 +1,8 @@
-package com.software.dto.project;
+package com.software.web.dto.project;
 
-import com.software.dto.event.EventListDto;
-import com.software.dto.sprint.SprintListDto;
-import com.software.dto.task.TaskListDto;
+import com.software.web.dto.event.EventListDto;
+import com.software.web.dto.sprint.SprintListDto;
+import com.software.web.dto.task.TaskListDto;
 import lombok.Builder;
 import lombok.Value;
 

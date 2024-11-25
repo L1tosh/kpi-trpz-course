@@ -1,4 +1,4 @@
-package com.software.dto.user;
+package com.software.web.dto.user;
 
 import lombok.Builder;
 import lombok.Value;

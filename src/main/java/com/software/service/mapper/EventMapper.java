@@ -1,8 +1,8 @@
 package com.software.service.mapper;
 
 import com.software.domain.Event;
-import com.software.dto.event.EventDto;
-import com.software.dto.event.EventListDto;
+import com.software.web.dto.event.EventDto;
+import com.software.web.dto.event.EventListDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

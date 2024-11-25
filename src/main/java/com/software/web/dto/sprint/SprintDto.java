@@ -1,6 +1,6 @@
-package com.software.dto.sprint;
+package com.software.web.dto.sprint;
 
-import com.software.dto.task.TaskListDto;
+import com.software.web.dto.task.TaskListDto;
 import lombok.Builder;
 import lombok.Value;
 

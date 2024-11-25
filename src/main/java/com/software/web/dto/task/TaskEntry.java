@@ -1,4 +1,4 @@
-package com.software.dto.task;
+package com.software.web.dto.task;
 
 import lombok.Builder;
 import lombok.Value;
@@ -7,7 +7,8 @@ import java.time.LocalDateTime;
 
 @Value
 @Builder
-public class TaskDto {
+public class TaskEntry {
+    Long id;
     String title;
     String description;
     Integer complexity;

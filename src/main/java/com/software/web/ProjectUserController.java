@@ -2,10 +2,10 @@ package com.software.web;
 
 import com.software.annotation.CheckUserInProject;
 import com.software.domain.user.Role;
-import com.software.dto.role.RoleDto;
-import com.software.dto.role.RoleListDto;
-import com.software.dto.user.UserDto;
-import com.software.dto.user.UserListDto;
+import com.software.web.dto.role.RoleDto;
+import com.software.web.dto.role.RoleListDto;
+import com.software.web.dto.user.UserDto;
+import com.software.web.dto.user.UserListDto;
 import com.software.service.UserService;
 import com.software.service.mapper.RoleMapper;
 import com.software.service.mapper.UserProjectRoleMapper;

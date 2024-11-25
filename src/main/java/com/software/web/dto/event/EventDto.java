@@ -1,4 +1,4 @@
-package com.software.dto.event;
+package com.software.web.dto.event;
 
 import lombok.Builder;
 import lombok.Value;

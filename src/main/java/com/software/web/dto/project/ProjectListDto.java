@@ -1,4 +1,4 @@
-package com.software.dto.project;
+package com.software.web.dto.project;
 
 import lombok.Builder;
 import lombok.Value;

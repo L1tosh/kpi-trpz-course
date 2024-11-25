@@ -1,7 +1,7 @@
 package com.software.web;
 
-import com.software.dto.role.RoleDto;
-import com.software.dto.role.RoleListDto;
+import com.software.web.dto.role.RoleDto;
+import com.software.web.dto.role.RoleListDto;
 import com.software.service.RoleService;
 import com.software.service.mapper.RoleMapper;
 import lombok.RequiredArgsConstructor;

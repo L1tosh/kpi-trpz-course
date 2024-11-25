@@ -1,8 +1,8 @@
 package com.software.service.mapper;
 
 import com.software.domain.user.Role;
-import com.software.dto.role.RoleDto;
-import com.software.dto.role.RoleListDto;
+import com.software.web.dto.role.RoleDto;
+import com.software.web.dto.role.RoleListDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

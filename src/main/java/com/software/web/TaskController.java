@@ -1,9 +1,9 @@
 package com.software.web;
 
 import com.software.annotation.CheckUserInProject;
-import com.software.dto.task.TaskDto;
-import com.software.dto.task.TaskEntry;
-import com.software.dto.task.TaskListDto;
+import com.software.web.dto.task.TaskDto;
+import com.software.web.dto.task.TaskEntry;
+import com.software.web.dto.task.TaskListDto;
 import com.software.service.TaskService;
 import com.software.service.mapper.TaskMapper;
 import org.springframework.beans.factory.annotation.Qualifier;

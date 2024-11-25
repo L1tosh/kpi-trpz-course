@@ -2,9 +2,9 @@ package com.software.web;
 
 import com.software.annotation.CheckUserInProject;
 import com.software.annotation.CheckUserIsOwner;
-import com.software.dto.project.ProjectDto;
-import com.software.dto.project.ProjectEntry;
-import com.software.dto.project.ProjectListDto;
+import com.software.web.dto.project.ProjectDto;
+import com.software.web.dto.project.ProjectEntry;
+import com.software.web.dto.project.ProjectListDto;
 import com.software.service.ProjectService;
 import com.software.service.mapper.ProjectMapper;
 import jakarta.validation.Valid;

@@ -1,4 +1,4 @@
-package com.software.dto.task;
+package com.software.web.dto.task;
 
 import lombok.Builder;
 import lombok.Value;

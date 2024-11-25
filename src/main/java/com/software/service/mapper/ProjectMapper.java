@@ -1,9 +1,9 @@
 package com.software.service.mapper;
 
 import com.software.domain.Project;
-import com.software.dto.project.ProjectDto;
-import com.software.dto.project.ProjectEntry;
-import com.software.dto.project.ProjectListDto;
+import com.software.web.dto.project.ProjectDto;
+import com.software.web.dto.project.ProjectEntry;
+import com.software.web.dto.project.ProjectListDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

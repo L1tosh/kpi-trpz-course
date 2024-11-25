@@ -1,4 +1,4 @@
-package com.software.dto.role;
+package com.software.web.dto.role;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
