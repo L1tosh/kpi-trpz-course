@@ -2,6 +2,7 @@ package com.software.web;
 
 import com.software.annotation.CheckUserInProject;
 import com.software.domain.user.Role;
+import com.software.dto.role.RoleDto;
 import com.software.dto.role.RoleListDto;
 import com.software.dto.user.UserDto;
 import com.software.dto.user.UserListDto;
@@ -47,9 +48,9 @@ public class ProjectUserController {
     public ResponseEntity<UserDto> addRoleToUser(
             @PathVariable Long projectId,
             @PathVariable Long userId,
-            @RequestBody @Valid RoleListDto roleDtos) {
+            @RequestBody @Valid RoleDto roleDto) {
 
-        userService.addRoleToUser(projectId, userId, roleMapper.toRoleList(roleDtos));
+        userService.addRoleToUser(projectId, userId, roleMapper.toRole(roleDto));
         var workerRoles = userService.getUserRolesInProject(projectId, userId);
 
         return ResponseEntity.ok(userMapper.toUserDto(projectId, workerRoles));

@@ -1,13 +1,15 @@
 package com.software.web;
 
 import com.software.annotation.CheckUserInProject;
+import com.software.annotation.CheckUserIsOwner;
 import com.software.dto.project.ProjectDto;
 import com.software.dto.project.ProjectEntry;
 import com.software.dto.project.ProjectListDto;
+import com.software.service.ProjectService;
 import com.software.service.mapper.ProjectMapper;
-import com.software.service.proxy.ProjectServiceProxy;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +19,19 @@ import java.net.URI;
 
 @RestController
 @Validated
-@RequiredArgsConstructor
 @RequestMapping("/api/v1/projects")
 public class ProjectController {
 
-    private final ProjectServiceProxy projectService;
+    private final ProjectService projectService;
     private final ProjectMapper projectMapper;
+
+    @Autowired
+    public ProjectController(
+            @Qualifier("projectServiceImpl") ProjectService projectService,
+            ProjectMapper projectMapper) {
+        this.projectService = projectService;
+        this.projectMapper = projectMapper;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProjectDto> getProjectById(@PathVariable("id") Long projectId) {
@@ -30,8 +39,11 @@ public class ProjectController {
     }
 
     @GetMapping
-    public ResponseEntity<ProjectListDto> getAllProjects() {
-        return ResponseEntity.ok(projectMapper.toProjectListDto(projectService.getAllProjects()));
+    public ResponseEntity<ProjectListDto> getAllProjects(@RequestParam Long userId) {
+        if (userId != null)
+            return ResponseEntity.ok(projectMapper.toProjectListDto(projectService.getAllUsersProjects(userId)));
+        else
+            return ResponseEntity.ok(projectMapper.toProjectListDto(projectService.getAllProjects()));
     }
 
     @PostMapping
@@ -53,7 +65,7 @@ public class ProjectController {
         return ResponseEntity.ok(projectMapper.toProjectDto(updatedProject));
     }
 
-    @CheckUserInProject
+    @CheckUserIsOwner
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProject(@PathVariable("id") Long projectId) {
         projectService.deleteProject(projectId);

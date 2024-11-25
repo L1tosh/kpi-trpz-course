@@ -6,19 +6,20 @@ import com.software.dto.task.TaskEntry;
 import com.software.dto.task.TaskListDto;
 import com.software.service.TaskService;
 import com.software.service.mapper.TaskMapper;
-import com.software.service.proxy.TaskServiceProxy;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/projects/{projectId}/items")
+@RequestMapping("/api/v1/projects/{projectId}/tasks")
 public class TaskController {
 
     private final TaskService taskService;
     private final TaskMapper taskMapper;
 
-    public TaskController(TaskServiceProxy taskServiceProxy, TaskMapper taskMapper) {
+    public TaskController(
+            @Qualifier("taskServiceProxy") TaskService taskServiceProxy, TaskMapper taskMapper) {
         this.taskService = taskServiceProxy;
         this.taskMapper = taskMapper;
     }
@@ -55,8 +56,7 @@ public class TaskController {
             @PathVariable Long projectId,
             @PathVariable Long taskId,
             @RequestBody TaskDto taskDto) {
-        var updatedTask = taskMapper.toTask(taskDto);
-        var task = taskService.updateTask(taskId, updatedTask);
+        var task = taskService.updateTask(projectId, taskId, taskMapper.toTask(taskDto));
         return ResponseEntity.ok(taskMapper.toTaskEntry(task));
     }
 
