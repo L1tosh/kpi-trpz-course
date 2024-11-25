@@ -7,29 +7,47 @@ import com.software.service.TaskService;
 import com.software.service.UserService;
 import com.software.service.exception.access.AccessDeniedException;
 import com.software.service.exception.role.RoleNotFoundException;
-import com.software.service.impl.TaskServiceImpl;
 import com.software.util.accesscontrol.RolePermissionService;
+import com.software.util.accesscontrol.factory.PermissionHandlerFactory;
 import com.software.util.accesscontrol.model.ActionEnum;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class TaskServiceProxy implements TaskService {
 
-    private final TaskServiceImpl taskService;
+    private final TaskService taskService;
     private final RolePermissionService rolePermissionService;
     private final JwtTokenUtil jwtTokenUtil;
     private final UserService userService;
+    private PermissionHandlerFactory permissionHandlerFactory;
+
+    @Autowired
+    public TaskServiceProxy(
+            @Qualifier("taskServiceImpl") TaskService taskService,
+            @Qualifier("userServiceImpl") UserService userService,
+            RolePermissionService rolePermissionService,
+            JwtTokenUtil jwtTokenUtil) {
+        this.taskService = taskService;
+        this.rolePermissionService = rolePermissionService;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.userService = userService;
+    }
+
+    @Autowired
+    @Qualifier("taskPermissionHandlerFactory")
+    public void setAccessHandlerFactory(PermissionHandlerFactory permissionHandlerFactory) {
+        this.permissionHandlerFactory = permissionHandlerFactory;
+    }
 
     @Override
     public List<Task> getAllTasks() {
@@ -52,7 +70,6 @@ public class TaskServiceProxy implements TaskService {
     }
 
     @Override
-    @Transactional
     @CachePut(value = "task", key = "#result.id")
     @CacheEvict(value = "tasks", key = "#projectId")
     public Task createTask(Task task, Long projectId) {
@@ -68,14 +85,12 @@ public class TaskServiceProxy implements TaskService {
     }
 
     @Override
-    @Transactional
     @CachePut(value = "task", key = "#taskId")
     @CacheEvict(value = "tasks", key = "#updatedTask.project.id")
-    public Task updateTask(Long taskId, Task updatedTask) {
-        Long projectId = updatedTask.getProject().getId();
+    public Task updateTask(Long projectId, Long taskId, Task updatedTask) {
         log.info("Attempting to update task with ID: {}", taskId);
         if (hasPermissionForAnyRole(projectId, ActionEnum.UPDATE)) {
-            Task updated = taskService.updateTask(taskId, updatedTask);
+            Task updated = taskService.updateTask(projectId, taskId, updatedTask);
             log.info("Task updated with ID: {}", updated.getId());
             return updated;
         } else {
@@ -85,14 +100,13 @@ public class TaskServiceProxy implements TaskService {
     }
 
     @Override
-    @Transactional
     @Caching(evict = {
             @CacheEvict(value = "task", key = "#taskId"),
             @CacheEvict(value = "tasks", allEntries = true)
     })
     public void deleteTaskById(Long taskId) {
-        Task taskToDelete = taskService.getTaskById(taskId);
-        Long projectId = taskToDelete.getProject().getId();
+        var taskToDelete = taskService.getTaskById(taskId);
+        var projectId = taskToDelete.getProject().getId();
 
         log.info("Attempting to delete task with ID: {}", taskId);
         if (hasPermissionForAnyRole(projectId, ActionEnum.DELETE)) {
@@ -117,8 +131,10 @@ public class TaskServiceProxy implements TaskService {
             throw new RoleNotFoundException();
         }
 
+        var accessHandlerChain = permissionHandlerFactory.createAccessHandlerChain();
+
         for (String roleName : roles) {
-            if (rolePermissionService.hasPermission(roleName, action)) {
+            if (rolePermissionService.hasPermission(accessHandlerChain, roleName, action)) {
                 log.info("Role {} has permission for action {}", roleName, action);
                 return true;
             }

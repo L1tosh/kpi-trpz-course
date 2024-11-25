@@ -60,14 +60,17 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public Task updateTask(Long taskId, Task updatedTask) {
+    public Task updateTask(Long projectId, Long taskId, Task updatedTask) {
         var taskToUpdate = getTaskById(taskId);
 
-        if (!taskToUpdate.getProject().getId().equals(updatedTask.getProject().getId())) {
+        if (!projectId.equals(taskToUpdate.getProject().getId())) {
             throw new IllegalStateException("Task belongs to a different project");
         }
 
         taskMapper.updateItem(updatedTask, taskToUpdate);
+        taskToUpdate.setId(taskId);
+
+        log.info("saved task {}", taskToUpdate);
 
         return taskRepository.save(taskToUpdate);
     }
