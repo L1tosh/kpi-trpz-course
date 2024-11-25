@@ -1,7 +1,7 @@
-package com.software.accesscontrol;
+package com.software.accesscontrol.service;
 
 import com.software.accesscontrol.handler.RolePermissionHandler;
-import com.software.accesscontrol.model.ActionEnum;
+import com.software.common.access.ActionEnum;
 
 public interface RolePermissionService {
     boolean hasPermission(RolePermissionHandler rolePermissionHandlerChain, String roleName, ActionEnum action);

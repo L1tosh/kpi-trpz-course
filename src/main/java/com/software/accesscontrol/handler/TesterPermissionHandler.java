@@ -1,6 +1,6 @@
 package com.software.accesscontrol.handler;
 
-import com.software.accesscontrol.model.ActionEnum;
+import com.software.common.access.ActionEnum;
 import com.software.domain.user.Role;
 
 public class TesterPermissionHandler extends RolePermissionHandler {

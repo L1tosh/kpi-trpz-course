@@ -1,7 +1,7 @@
 package com.software.service.mapper;
 
-import com.software.common.TaskStatus;
-import com.software.common.TaskType;
+import com.software.common.task.TaskStatus;
+import com.software.common.task.TaskType;
 import com.software.domain.Task;
 import com.software.web.dto.task.TaskDto;
 import com.software.web.dto.task.TaskEntry;

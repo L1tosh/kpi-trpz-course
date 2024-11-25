@@ -1,4 +1,4 @@
-package com.software.accesscontrol.model;
+package com.software.common.access;
 
 public enum ActionEnum {
     CREATE,

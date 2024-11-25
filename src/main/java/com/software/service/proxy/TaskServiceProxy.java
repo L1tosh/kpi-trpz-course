@@ -1,9 +1,9 @@
 package com.software.service.proxy;
 
-import com.software.accesscontrol.RolePermissionService;
 import com.software.accesscontrol.factory.PermissionHandlerFactory;
-import com.software.accesscontrol.model.ActionEnum;
+import com.software.accesscontrol.service.impl.RolePermissionService;
 import com.software.auth.jwt.JwtTokenUtil;
+import com.software.common.access.ActionEnum;
 import com.software.domain.Task;
 import com.software.domain.user.Role;
 import com.software.service.TaskService;

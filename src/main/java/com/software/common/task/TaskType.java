@@ -1,4 +1,4 @@
-package com.software.common;
+package com.software.common.task;
 
 public enum TaskType {
     TASK,

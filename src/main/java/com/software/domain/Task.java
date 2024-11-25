@@ -1,7 +1,7 @@
 package com.software.domain;
 
-import com.software.common.TaskStatus;
-import com.software.common.TaskType;
+import com.software.common.task.TaskStatus;
+import com.software.common.task.TaskType;
 import com.software.domain.methodology.scrum.Sprint;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

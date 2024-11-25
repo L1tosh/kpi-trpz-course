@@ -1,8 +1,7 @@
-package com.software.accesscontrol.impl;
+package com.software.accesscontrol.service.impl;
 
-import com.software.accesscontrol.RolePermissionService;
 import com.software.accesscontrol.handler.RolePermissionHandler;
-import com.software.accesscontrol.model.ActionEnum;
+import com.software.common.access.ActionEnum;
 import com.software.domain.user.Role;
 import org.springframework.stereotype.Component;
 
