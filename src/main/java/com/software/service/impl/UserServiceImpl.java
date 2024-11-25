@@ -7,6 +7,7 @@ import com.software.domain.user.Role;
 import com.software.domain.user.UserProjectRole;
 import com.software.service.UserService;
 import com.software.service.exception.project.ProjectNotFoundException;
+import com.software.service.exception.role.RoleNotFoundException;
 import com.software.service.exception.user.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     private final ProjectRepository projectRepository;
     private final RoleRepository roleRepository;
-    private final UserProjectRoleRepository userRepository;
+    private final UserProjectRoleRepository userProjectRoleRepository;
 
     @Override
     public Map<Long, List<Role>> getProjectUsers(Long projectId) {
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
             throw new ProjectNotFoundException(projectId);
         }
 
-        return userRepository.findByProjectId(projectId).stream()
+        return userProjectRoleRepository.findByProjectId(projectId).stream()
                 .collect(Collectors.groupingBy(
                         UserProjectRole::getUserId,
                         Collectors.mapping(UserProjectRole::getRole, Collectors.toList())
@@ -53,35 +54,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void addRoleToUser(Long projectId, Long userId, List<Role> roles) {
+    public void addRoleToUser(Long projectId, Long userId, Role role) {
         var project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found with id : " + projectId));
 
-        var roleIds = roles.stream().map(Role::getId).toList();
+        var existingRole = roleRepository.findByName(role.getName())
+                .orElseThrow(() -> new RoleNotFoundException(role.getName()));
 
-        var existingRoleIds = roleRepository.findAllById(roleIds).stream()
-                .map(Role::getId)
-                .collect(Collectors.toSet());
+        var userProjectRole = UserProjectRole.builder()
+                .userId(userId)
+                .role(existingRole)
+                .project(project)
+                .build();
 
-
-        var missingRoles = roleIds.stream()
-                .filter(roleId -> !existingRoleIds.contains(roleId))
-                .toList();
-
-        if (!missingRoles.isEmpty()) {
-            throw new IllegalArgumentException("Some roles not found with ids: " + missingRoles);
-        }
-
-        var userProjectRoles = roles.stream()
-                .filter(role -> existingRoleIds.contains(role.getId()))
-                .map(role -> UserProjectRole.builder()
-                        .project(project)
-                        .role(role)
-                        .userId(userId)
-                        .build())
-                .toList();
-
-        userRepository.saveAll(userProjectRoles);
+        userProjectRoleRepository.save(userProjectRole);
     }
 
     @Override
@@ -90,7 +76,7 @@ public class UserServiceImpl implements UserService {
         var project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found with id: " + projectId));
 
-        var existingUserRoles = userRepository.findByUserIdAndProjectId(userId, projectId);
+        var existingUserRoles = userProjectRoleRepository.findByUserIdAndProjectId(userId, projectId);
 
         var rolesToRemove = roles.stream()
                 .filter(role -> existingUserRoles.stream()
@@ -102,14 +88,14 @@ public class UserServiceImpl implements UserService {
                     .filter(userProjectRole -> rolesToRemove.contains(userProjectRole.getRole()))
                     .toList();
 
-            userRepository.deleteAll(rolesToDelete);
+            userProjectRoleRepository.deleteAll(rolesToDelete);
         }
 
 
-        var remainingRoles = userRepository.findByUserIdAndProjectId(userId, projectId);
+        var remainingRoles = userProjectRoleRepository.findByUserIdAndProjectId(userId, projectId);
         if (remainingRoles.isEmpty()) {
-            var basicWorkerRole = roleRepository.findByName("worker")
-                    .orElseThrow(() -> new IllegalArgumentException("Basic role 'worker' not found"));
+            var basicWorkerRole = roleRepository.findByName("Viewer")
+                    .orElseThrow(() -> new IllegalArgumentException("Basic role 'Viewer' not found"));
 
             var newUserProjectRole = UserProjectRole.builder()
                     .project(project)
@@ -117,7 +103,7 @@ public class UserServiceImpl implements UserService {
                     .userId(userId)
                     .build();
 
-            userRepository.save(newUserProjectRole);
+            userProjectRoleRepository.save(newUserProjectRole);
         }
     }
 
@@ -129,12 +115,12 @@ public class UserServiceImpl implements UserService {
         }
 
         var userProjectRoles =
-                userRepository.findByUserIdAndProjectId(projectId, userId);
+                userProjectRoleRepository.findByUserIdAndProjectId(projectId, userId);
 
         if (userProjectRoles.isEmpty()) {
             throw new IllegalArgumentException("User not found in the project with id: " + projectId);
         }
 
-        userRepository.deleteAll(userProjectRoles);
+        userProjectRoleRepository.deleteAll(userProjectRoles);
     }
 }
