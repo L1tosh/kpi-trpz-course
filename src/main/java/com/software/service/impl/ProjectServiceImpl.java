@@ -28,6 +28,14 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public List<Project> getAllUsersProjects(Long userId) {
+        return projectRepository.findAll().stream()
+                .filter(project -> project.getWorkers().stream()
+                        .anyMatch(worker -> worker.equals(userId)))
+                .toList();
+    }
+
+    @Override
     public Project getProjectById(Long projectId) {
         return projectRepository.findById(projectId).orElseThrow(() -> {
             log.info("Project with id {} not found", projectId);
@@ -74,6 +82,5 @@ public class ProjectServiceImpl implements ProjectService {
         return project.getWorkers().stream()
                 .anyMatch(worker -> worker.equals(userId));
     }
-
 
 }
