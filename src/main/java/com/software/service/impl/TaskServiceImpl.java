@@ -3,8 +3,6 @@ package com.software.service.impl;
 import com.software.data.ProjectRepository;
 import com.software.data.TaskRepository;
 import com.software.domain.Task;
-import com.software.domain.comment.CommentComponent;
-import com.software.domain.comment.CommentComposite;
 import com.software.service.TaskService;
 import com.software.service.exception.project.ProjectNotFoundException;
 import com.software.service.exception.task.TaskNotFoundException;
@@ -89,9 +87,6 @@ public class TaskServiceImpl implements TaskService {
                     return new ProjectNotFoundException(projectId);
                 }
         );
-
-        CommentComponent commentComponent = new CommentComposite();
-        commentComponent.convertToJson();
 
         if (taskRepository.findByIdAndProject(taskId, project).isPresent()) {
             taskRepository.deleteById(taskId);
