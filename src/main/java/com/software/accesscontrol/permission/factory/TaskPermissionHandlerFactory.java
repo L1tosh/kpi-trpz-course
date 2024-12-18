@@ -1,6 +1,7 @@
-package com.software.accesscontrol.factory;
+package com.software.accesscontrol.permission.factory;
 
-import com.software.accesscontrol.handler.*;
+import com.software.accesscontrol.permission.RolePermissionHandler;
+import com.software.accesscontrol.permission.handler.*;
 import org.springframework.stereotype.Component;
 
 @Component

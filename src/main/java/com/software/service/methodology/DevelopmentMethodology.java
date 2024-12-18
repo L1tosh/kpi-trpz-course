@@ -1,4 +1,4 @@
-package com.software.service.bridge;
+package com.software.service.methodology;
 
 import java.util.List;
 

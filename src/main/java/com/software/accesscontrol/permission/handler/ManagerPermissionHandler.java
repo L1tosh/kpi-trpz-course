@@ -1,5 +1,6 @@
-package com.software.accesscontrol.handler;
+package com.software.accesscontrol.permission.handler;
 
+import com.software.accesscontrol.permission.RolePermissionHandler;
 import com.software.common.access.ActionEnum;
 import com.software.domain.user.Role;
 

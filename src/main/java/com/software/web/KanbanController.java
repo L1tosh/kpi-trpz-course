@@ -1,9 +1,9 @@
 package com.software.web;
 
 import com.software.domain.methodology.kanban.KanbanBoard;
-import com.software.service.bridge.DevelopmentMethodology;
-import com.software.service.bridge.MethodologyServiceFactory;
 import com.software.service.mapper.KanbanMapper;
+import com.software.service.methodology.DevelopmentMethodology;
+import com.software.service.methodology.factory.MethodologyServiceFactory;
 import com.software.web.dto.methodology.kanban.KanbanBoardDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

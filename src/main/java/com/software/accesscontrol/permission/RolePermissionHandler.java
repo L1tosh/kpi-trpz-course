@@ -1,4 +1,4 @@
-package com.software.accesscontrol.handler;
+package com.software.accesscontrol.permission;
 
 import com.software.common.access.ActionEnum;
 import com.software.domain.user.Role;

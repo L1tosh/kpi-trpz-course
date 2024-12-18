@@ -1,4 +1,4 @@
-package com.software.service.bridge;
+package com.software.service.methodology;
 
 import com.software.common.task.TaskStatus;
 

@@ -1,7 +1,7 @@
-package com.software.service.bridge.abstraction;
+package com.software.service.methodology.abstraction;
 
-import com.software.service.bridge.DevelopmentImplementation;
-import com.software.service.bridge.DevelopmentMethodology;
+import com.software.service.methodology.DevelopmentImplementation;
+import com.software.service.methodology.DevelopmentMethodology;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

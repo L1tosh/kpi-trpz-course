@@ -1,4 +1,4 @@
-package com.software.service.bridge.implementor;
+package com.software.service.methodology.implementor;
 
 import com.software.common.task.TaskStatus;
 import com.software.common.task.TaskType;
@@ -7,9 +7,9 @@ import com.software.data.TaskRepository;
 import com.software.data.methodology.SprintRepository;
 import com.software.domain.Task;
 import com.software.domain.methodology.scrum.Sprint;
-import com.software.service.bridge.DevelopmentImplementation;
 import com.software.service.exception.project.ProjectNotFoundException;
 import com.software.service.exception.task.TaskNotFoundException;
+import com.software.service.methodology.DevelopmentImplementation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

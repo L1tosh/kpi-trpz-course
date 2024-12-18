@@ -1,6 +1,6 @@
-package com.software.accesscontrol.service;
+package com.software.accesscontrol.permission.service;
 
-import com.software.accesscontrol.handler.RolePermissionHandler;
+import com.software.accesscontrol.permission.RolePermissionHandler;
 import com.software.common.access.ActionEnum;
 
 public interface RolePermissionService {

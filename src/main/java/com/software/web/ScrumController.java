@@ -2,9 +2,9 @@ package com.software.web;
 
 import com.software.accesscontrol.annotation.CheckUserInProject;
 import com.software.domain.methodology.scrum.Sprint;
-import com.software.service.bridge.DevelopmentMethodology;
-import com.software.service.bridge.MethodologyServiceFactory;
 import com.software.service.mapper.SprintMapper;
+import com.software.service.methodology.DevelopmentMethodology;
+import com.software.service.methodology.factory.MethodologyServiceFactory;
 import com.software.web.dto.methodology.scrum.SprintDto;
 import com.software.web.dto.methodology.scrum.SprintListDto;
 import org.springframework.beans.factory.annotation.Autowired;
