@@ -64,9 +64,9 @@ public class TaskServiceProxy implements TaskService {
 
     @Override
     @Cacheable(value = "task", key = "#taskId", unless = "#result == null")
-    public Task getTaskById(Long taskId) {
+    public Task getTaskById(Long projectId, Long taskId) {
         log.info("Fetching task with ID: {}", taskId);
-        return taskService.getTaskById(taskId);
+        return taskService.getTaskById(projectId, taskId);
     }
 
     @Override
@@ -104,13 +104,10 @@ public class TaskServiceProxy implements TaskService {
             @CacheEvict(value = "task", key = "#taskId"),
             @CacheEvict(value = "tasks", allEntries = true)
     })
-    public void deleteTaskById(Long taskId) {
-        var taskToDelete = taskService.getTaskById(taskId);
-        var projectId = taskToDelete.getProject().getId();
-
+    public void deleteTaskById(Long projectId, Long taskId) {
         log.info("Attempting to delete task with ID: {}", taskId);
         if (hasPermissionForAnyRole(projectId, ActionEnum.DELETE)) {
-            taskService.deleteTaskById(taskId);
+            taskService.deleteTaskById(projectId, taskId);
             log.info("Task with ID: {} deleted", taskId);
         } else {
             log.error("Access denied for deleting task with ID: {}", taskId);

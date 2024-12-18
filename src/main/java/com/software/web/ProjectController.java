@@ -6,7 +6,7 @@ import com.software.service.ProjectService;
 import com.software.service.mapper.ProjectMapper;
 import com.software.web.dto.project.ProjectDto;
 import com.software.web.dto.project.ProjectEntry;
-import com.software.web.dto.project.ProjectListDto;
+import com.software.web.dto.project.ProjectResources;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,14 +34,23 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProjectDto> getProjectById(@PathVariable("id") Long projectId) {
-        return ResponseEntity.ok(projectMapper.toProjectDto(projectService.getProjectById(projectId)));
+    public ResponseEntity<? extends ProjectResources> getProjectById(
+            @PathVariable("id") Long projectId,
+            @RequestParam(required = false, defaultValue = "false") Boolean fullInfo) {
+        var searchingProject = projectService.getProjectById(projectId);
+
+        if (Boolean.TRUE.equals(fullInfo))
+            return ResponseEntity.ok(projectMapper.toProjectEntry(searchingProject));
+        else
+            return ResponseEntity.ok(projectMapper.toProjectDto(searchingProject));
     }
 
+
     @GetMapping
-    public ResponseEntity<ProjectListDto> getAllProjects(@RequestParam Long userId) {
+    public ResponseEntity<? extends ProjectResources> getAllProjects(
+            @RequestParam(required = false, defaultValue = "0") Long userId) {
         if (userId != null)
-            return ResponseEntity.ok(projectMapper.toProjectListDto(projectService.getAllUsersProjects(userId)));
+            return ResponseEntity.ok(projectMapper.toProjectEntryList(projectService.getAllUsersProjects(userId)));
         else
             return ResponseEntity.ok(projectMapper.toProjectListDto(projectService.getAllProjects()));
     }

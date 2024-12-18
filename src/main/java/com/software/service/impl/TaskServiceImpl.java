@@ -3,6 +3,8 @@ package com.software.service.impl;
 import com.software.data.ProjectRepository;
 import com.software.data.TaskRepository;
 import com.software.domain.Task;
+import com.software.domain.comment.CommentComponent;
+import com.software.domain.comment.CommentComposite;
 import com.software.service.TaskService;
 import com.software.service.exception.project.ProjectNotFoundException;
 import com.software.service.exception.task.TaskNotFoundException;
@@ -31,8 +33,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> getAllTasks(Long projectId) {
-        var project = projectRepository.findById(projectId)
-                .orElseThrow(() -> {
+        var project = projectRepository.findById(projectId).orElseThrow(() -> {
                     log.info("Project with if {} not found", projectId);
                     return new ProjectNotFoundException(projectId);
                 }
@@ -41,9 +42,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task getTaskById(Long taskId) {
-        return taskRepository.findById(taskId)
-                .orElseThrow(() -> {
+    public Task getTaskById(Long projectId, Long taskId) {
+        var project = projectRepository.findById(projectId).orElseThrow(() -> {
+                    log.info("Project with if {} not found", projectId);
+                    return new ProjectNotFoundException(projectId);
+                }
+        );
+
+        return taskRepository.findByIdAndProject(taskId, project).orElseThrow(() -> {
                     log.info("Item with id {} not found", taskId);
                     return new TaskNotFoundException(taskId);
                 });
@@ -61,7 +67,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional
     public Task updateTask(Long projectId, Long taskId, Task updatedTask) {
-        var taskToUpdate = getTaskById(taskId);
+        var taskToUpdate = getTaskById(projectId, taskId);
 
         if (!projectId.equals(taskToUpdate.getProject().getId())) {
             throw new IllegalStateException("Task belongs to a different project");
@@ -77,12 +83,22 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public void deleteTaskById(Long taskId) {
-        if (taskRepository.findById(taskId).isPresent()) {
+    public void deleteTaskById(Long projectId, Long taskId) {
+        var project = projectRepository.findById(projectId).orElseThrow(() -> {
+                    log.info("Project with if {} not found", projectId);
+                    return new ProjectNotFoundException(projectId);
+                }
+        );
+
+        CommentComponent commentComponent = new CommentComposite();
+        commentComponent.convertToJson();
+
+        if (taskRepository.findByIdAndProject(taskId, project).isPresent()) {
             taskRepository.deleteById(taskId);
 
         } else {
             log.warn("Attempt to delete item with id {}", taskId);
         }
     }
+
 }

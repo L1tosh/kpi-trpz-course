@@ -7,6 +7,6 @@ import java.util.List;
 
 @Value
 @Builder
-public class ProjectListDto implements ProjectResources {
-    List<ProjectDto> projectDtos;
+public class ProjectEntryList implements ProjectResources {
+    List<ProjectEntry> projectDtos;
 }

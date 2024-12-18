@@ -6,7 +6,8 @@ import com.software.domain.user.Role;
 public class ManagerPermissionHandler extends RolePermissionHandler {
     @Override
     public boolean checkPermission(ActionEnum action, Role role) {
-        if ("Manager".equals(role.getName()) && (action == ActionEnum.CREATE || action == ActionEnum.VIEW || action == ActionEnum.UPDATE)) {
+        if ("Manager".equals(role.getName()) &&
+                (action == ActionEnum.CREATE || action == ActionEnum.VIEW || action == ActionEnum.UPDATE)) {
                 return true;
             }
 

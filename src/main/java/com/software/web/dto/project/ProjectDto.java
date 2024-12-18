@@ -8,7 +8,9 @@ import lombok.Value;
 
 @Value
 @Builder
-public class ProjectDto {
+public class ProjectDto implements ProjectResources {
+
+    Long id;
 
     @NotBlank(message = "name is mandatory")
     @Size(max = 100, message = "name length must not exceed 100 characters")

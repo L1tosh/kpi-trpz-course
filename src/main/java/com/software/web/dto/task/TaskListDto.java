@@ -8,5 +8,5 @@ import java.util.List;
 @Value
 @Builder
 public class TaskListDto {
-    List<TaskDto> taskDtos;
+    List<TaskEntry> taskDtos;
 }

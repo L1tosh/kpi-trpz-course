@@ -7,5 +7,6 @@ public enum TaskStatus {
     BLOCKED,
     REVIEW,
     BACKLOG,
-    UNDER_REVIEW
+    UNDER_REVIEW,
+    PLANNED
 }

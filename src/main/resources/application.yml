@@ -2,7 +2,8 @@ spring:
     application:
         name: ProjectManagementSoftwareApplication
     datasource:
-        url: jdbc:postgresql://localhost:5432/project-management-software
+        #url: jdbc:postgresql://localhost:5432/project-management-software
+        url: jdbc:postgresql://db:5432/project-management-software
         username: postgres
         password: root
         driver-class-name: org.postgresql.Driver

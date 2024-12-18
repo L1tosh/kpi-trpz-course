@@ -30,7 +30,7 @@ public class TaskController {
     public ResponseEntity<TaskEntry> getTaskById(
             @PathVariable Long projectId,
             @PathVariable Long taskId) {
-        return ResponseEntity.ok(taskMapper.toTaskEntry(taskService.getTaskById(taskId)));
+        return ResponseEntity.ok(taskMapper.toTaskEntry(taskService.getTaskById(projectId, taskId)));
     }
 
     @CheckUserInProject
@@ -65,7 +65,7 @@ public class TaskController {
     public ResponseEntity<Void> deleteTask(
             @PathVariable Long projectId,
             @PathVariable Long taskId) {
-        taskService.deleteTaskById(taskId);
+        taskService.deleteTaskById(projectId, taskId);
         return ResponseEntity.noContent().build();
     }
 

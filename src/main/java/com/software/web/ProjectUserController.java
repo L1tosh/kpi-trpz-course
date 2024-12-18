@@ -32,6 +32,7 @@ public class ProjectUserController {
     public ResponseEntity<UserListDto> getProjectUsers(@PathVariable Long projectId) {
         var projectUsers = userService.getProjectUsers(projectId);
         var userList = mapProjectUsersToUserListDto(projectUsers);
+
         return ResponseEntity.ok(UserListDto.builder().staff(userList).build());
     }
 

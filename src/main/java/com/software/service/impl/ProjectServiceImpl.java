@@ -30,8 +30,8 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<Project> getAllUsersProjects(Long userId) {
         return projectRepository.findAll().stream()
-                .filter(project -> project.getWorkers().stream()
-                        .anyMatch(worker -> worker.equals(userId)))
+                .filter(project -> project.getOwner().equals(userId) ||
+                        project.getWorkers().contains(userId))
                 .toList();
     }
 
