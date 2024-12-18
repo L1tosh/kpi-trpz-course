@@ -67,7 +67,9 @@ public interface TaskMapper {
     TaskEntry toTaskEntry(Task task);
 
     List<TaskDto> toTaskDto(List<Task> taskList);
+    List<TaskEntry> toTaskEntry(List<Task> taskList);
     List<Task> toTask(List<TaskDto> taskDtoList);
+    List<Task> toTaskFromEntry(List<TaskEntry> taskDtoList);
 
     @Named("toTaskStatus")
     default TaskStatus toTaskStatus(String taskStatus) {
@@ -93,12 +95,12 @@ public interface TaskMapper {
     default TaskListDto toTaskListDto(List<Task> taskList) {
         if (taskList == null) return null;
 
-        return TaskListDto.builder().taskDtos(toTaskDto(taskList)).build();
+        return TaskListDto.builder().taskDtos(toTaskEntry(taskList)).build();
     }
 
     @Named("toTaskList")
     default List<Task> toItemList(TaskListDto taskListDto) {
-        return toTask(taskListDto.getTaskDtos());
+        return toTaskFromEntry(taskListDto.getTaskDtos());
     }
 
     void updateItem(Task source, @MappingTarget Task target);

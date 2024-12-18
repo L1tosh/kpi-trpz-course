@@ -1,8 +1,8 @@
 package com.software.service.mapper;
 
 import com.software.domain.methodology.scrum.Sprint;
-import com.software.web.dto.sprint.SprintDto;
-import com.software.web.dto.sprint.SprintListDto;
+import com.software.web.dto.methodology.scrum.SprintDto;
+import com.software.web.dto.methodology.scrum.SprintListDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

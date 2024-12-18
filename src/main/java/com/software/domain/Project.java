@@ -1,5 +1,6 @@
 package com.software.domain;
 
+import com.software.domain.methodology.kanban.KanbanBoard;
 import com.software.domain.methodology.scrum.Sprint;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -42,4 +43,7 @@ public class Project {
 
     @OneToMany(mappedBy = "project")
     private List<Sprint> sprints;
+
+    @OneToMany(mappedBy = "project")
+    private List<KanbanBoard> kanbanBoards;
 }

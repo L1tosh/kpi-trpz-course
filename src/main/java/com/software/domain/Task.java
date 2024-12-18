@@ -2,6 +2,7 @@ package com.software.domain;
 
 import com.software.common.task.TaskStatus;
 import com.software.common.task.TaskType;
+import com.software.domain.methodology.kanban.KanbanColumn;
 import com.software.domain.methodology.scrum.Sprint;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -60,12 +61,6 @@ public class Task {
             inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private List<Comment> comments;
 
-    @ManyToMany
-    @JoinTable(name = "item_files",
-            joinColumns = @JoinColumn(name = "item_id"),
-            inverseJoinColumns = @JoinColumn(name = "file_id"))
-    private List<FileStorage> files;
-
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
@@ -74,5 +69,9 @@ public class Task {
     @JoinColumn(name = "sprint_id")
     private Sprint sprint;
 
+    @ManyToOne
+    @JoinColumn(name = "kanban_column_id", nullable = false)
+    private KanbanColumn kanbanColumn;
 }
+
 

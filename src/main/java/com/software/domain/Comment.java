@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,11 +25,4 @@ public class Comment {
 
     @Column(name = "time", nullable = false)
     private Date time;
-
-    @ManyToMany
-    @JoinTable(name = "item_files",
-            joinColumns = @JoinColumn(name = "item_id"),
-            inverseJoinColumns = @JoinColumn(name = "file_id"))
-    private List<FileStorage> files;
-
 }
